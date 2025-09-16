@@ -27,11 +27,13 @@ npm install aws-simple-stripe-event-notifier
 Before using this library, you need to set up Stripe Event Destinations and create a partner event bus in Amazon EventBridge. Follow these steps:
 
 #### 1.1: Enable Workbench
+
 1. Go to your Stripe Dashboard
 2. Navigate to **Developer settings** → **Workbench**
 3. Enable Workbench if not already enabled
 
 #### 1.2: Create Event Destination
+
 1. Open the **Webhooks** tab in Workbench
 2. Click **Create new destination**
 3. Select **Account** to listen to events from your own account
@@ -41,6 +43,7 @@ Before using this library, you need to set up Stripe Event Destinations and crea
 7. Click **Create destination**
 
 #### 1.3: Associate Partner Event Source
+
 1. Go to AWS Management Console → **EventBridge** → **Partner event sources**
 2. Select the region you chose in Step 1.2
 3. Find the newly created partner event source (format: `aws.partner/stripe.com/{UNIQUE_ID}`)
@@ -48,6 +51,7 @@ Before using this library, you need to set up Stripe Event Destinations and crea
 5. Select permissions and click **Associate**
 
 #### 1.4: Create EventBridge Rules
+
 1. Navigate to **EventBridge** → **Rules**
 2. Click **Create Rule**
 3. Select your event bus from the dropdown
@@ -98,7 +102,7 @@ export class MyStack extends cdk.Stack {
       eventBus,
       topic,
       eventTypes: ['payment_intent.succeeded', 'customer.created'],
-      messageTemplate: (EventField) => ({
+      messageTemplate: EventField => ({
         version: '1.0',
         source: 'stripe',
         content: {
@@ -141,7 +145,7 @@ new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
   eventBus,
   topic: snsTopicForShifterActivitiesChannel,
   eventTypes: ['customer.subscription.created'],
-  messageTemplate: (EventField) => ({
+  messageTemplate: EventField => ({
     version: '1.0',
     source: 'custom',
     content: {
@@ -180,12 +184,12 @@ new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
 
 ### AwsSimpleStripeEventNotifierProps
 
-| Property | Type | Required | Description |
-|----------|------|----------|-------------|
-| `eventBus` | `events.IEventBus` | ✅ | EventBridge event bus that receives Stripe events |
-| `topic` | `sns.ITopic` | ✅ | SNS topic to send notifications to |
-| `eventTypes` | `string[]` | ✅ | Array of Stripe event types to monitor |
-| `messageTemplate` | `(EventField) => any` | ✅ | Template function to generate SNS message content |
+| Property          | Type                  | Required | Description                                       |
+| ----------------- | --------------------- | -------- | ------------------------------------------------- |
+| `eventBus`        | `events.IEventBus`    | ✅       | EventBridge event bus that receives Stripe events |
+| `topic`           | `sns.ITopic`          | ✅       | SNS topic to send notifications to                |
+| `eventTypes`      | `string[]`            | ✅       | Array of Stripe event types to monitor            |
+| `messageTemplate` | `(EventField) => any` | ✅       | Template function to generate SNS message content |
 
 ### EventField Utility
 
@@ -200,6 +204,7 @@ EventField methods available within the `messageTemplate` function:
 ## Additional Setup
 
 ### AWS Chatbot Setup (for Slack notifications)
+
 - Connect SNS topic with Slack channel
 
 ## Supported Event Types

@@ -27,11 +27,13 @@ npm install aws-simple-stripe-event-notifier
 このライブラリを使用する前に、Stripe Event DestinationsとAmazon EventBridgeのパートナーイベントバスを設定する必要があります。以下の手順に従ってください：
 
 #### 1.1: Workbenchの有効化
+
 1. Stripeダッシュボードにアクセス
 2. **Developer settings** → **Workbench** に移動
 3. Workbenchが有効でない場合は有効化
 
 #### 1.2: Event Destinationの作成
+
 1. Workbenchの**Webhooks**タブを開く
 2. **Create new destination**をクリック
 3. 自分のアカウントのイベントを監視するため**Account**を選択
@@ -41,6 +43,7 @@ npm install aws-simple-stripe-event-notifier
 7. **Create destination**をクリック
 
 #### 1.3: パートナーイベントソースの関連付け
+
 1. AWS Management Console → **EventBridge** → **Partner event sources** に移動
 2. ステップ1.2で選択したリージョンを選択
 3. 新しく作成されたパートナーイベントソースを探す（形式: `aws.partner/stripe.com/{UNIQUE_ID}`）
@@ -48,6 +51,7 @@ npm install aws-simple-stripe-event-notifier
 5. 権限を選択して**Associate**をクリック
 
 #### 1.4: EventBridgeルールの作成
+
 1. **EventBridge** → **Rules** に移動
 2. **Create Rule**をクリック
 3. ドロップダウンからイベントバスを選択
@@ -98,7 +102,7 @@ export class MyStack extends cdk.Stack {
       eventBus,
       topic,
       eventTypes: ['payment_intent.succeeded', 'customer.created'],
-      messageTemplate: (EventField) => ({
+      messageTemplate: EventField => ({
         version: '1.0',
         source: 'stripe',
         content: {
@@ -141,7 +145,7 @@ new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
   eventBus,
   topic: snsTopicForShifterActivitiesChannel,
   eventTypes: ['customer.subscription.created'],
-  messageTemplate: (EventField) => ({
+  messageTemplate: EventField => ({
     version: '1.0',
     source: 'custom',
     content: {
@@ -180,12 +184,12 @@ new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
 
 ### AwsSimpleStripeEventNotifierProps
 
-| プロパティ | 型 | 必須 | 説明 |
-|-----------|-----|------|------|
-| `eventBus` | `events.IEventBus` | ✅ | Stripeイベントを受信するEventBridgeイベントバス |
-| `topic` | `sns.ITopic` | ✅ | 通知を送信するSNSトピック |
-| `eventTypes` | `string[]` | ✅ | 監視するStripeイベントタイプの配列 |
-| `messageTemplate` | `(EventField) => any` | ✅ | SNSメッセージを生成するテンプレート関数 |
+| プロパティ        | 型                    | 必須 | 説明                                            |
+| ----------------- | --------------------- | ---- | ----------------------------------------------- |
+| `eventBus`        | `events.IEventBus`    | ✅   | Stripeイベントを受信するEventBridgeイベントバス |
+| `topic`           | `sns.ITopic`          | ✅   | 通知を送信するSNSトピック                       |
+| `eventTypes`      | `string[]`            | ✅   | 監視するStripeイベントタイプの配列              |
+| `messageTemplate` | `(EventField) => any` | ✅   | SNSメッセージを生成するテンプレート関数         |
 
 ### EventField ユーティリティ
 
@@ -200,6 +204,7 @@ new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
 ## 追加設定
 
 ### AWS Chatbotの設定（Slack通知の場合）
+
 - SNSトピックとSlackチャンネルを連携
 
 ## 対応イベントタイプ

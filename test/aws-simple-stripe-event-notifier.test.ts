@@ -2,8 +2,10 @@ import * as cdk from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as sns from 'aws-cdk-lib/aws-sns';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import { AwsSimpleStripeEventNotifier, AwsSimpleStripeEventNotifierProps } from '../lib/index';
+import {
+  AwsSimpleStripeEventNotifier,
+  AwsSimpleStripeEventNotifierProps,
+} from '../lib/index';
 
 describe('AwsSimpleStripeEventNotifier', () => {
   let app: cdk.App;
@@ -23,8 +25,8 @@ describe('AwsSimpleStripeEventNotifier', () => {
       eventTypes: ['payment_intent.succeeded', 'customer.created'],
       messageTemplate: (eventField: typeof events.EventField) => ({
         message: `Stripe Event: ${eventField.fromPath('$.detail-type')}`,
-        data: eventField.fromPath('$.detail')
-      })
+        data: eventField.fromPath('$.detail'),
+      }),
     };
   });
 
@@ -32,7 +34,11 @@ describe('AwsSimpleStripeEventNotifier', () => {
   describe('Constructor Initialization', () => {
     test('should create construct with valid props', () => {
       // WHEN
-      const notifier = new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', props);
+      const notifier = new AwsSimpleStripeEventNotifier(
+        stack,
+        'TestNotifier',
+        props
+      );
 
       // THEN
       expect(notifier).toBeDefined();
@@ -92,8 +98,8 @@ describe('AwsSimpleStripeEventNotifier', () => {
         Description: 'Generic rule to relay Stripe events to SNS',
         EventPattern: {
           source: [{ prefix: 'aws.partner/stripe.com' }],
-          'detail-type': ['payment_intent.succeeded', 'customer.created']
-        }
+          'detail-type': ['payment_intent.succeeded', 'customer.created'],
+        },
       });
     });
 
@@ -115,7 +121,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
       // GIVEN
       const customProps = {
         ...props,
-        eventTypes: ['invoice.payment_succeeded', 'charge.dispute.created']
+        eventTypes: ['invoice.payment_succeeded', 'charge.dispute.created'],
       };
 
       // WHEN
@@ -126,8 +132,11 @@ describe('AwsSimpleStripeEventNotifier', () => {
       template.hasResourceProperties('AWS::Events::Rule', {
         EventPattern: {
           source: [{ prefix: 'aws.partner/stripe.com' }],
-          'detail-type': ['invoice.payment_succeeded', 'charge.dispute.created']
-        }
+          'detail-type': [
+            'invoice.payment_succeeded',
+            'charge.dispute.created',
+          ],
+        },
       });
     });
   });
@@ -143,29 +152,29 @@ describe('AwsSimpleStripeEventNotifier', () => {
       const policies = template.findResources('AWS::SNS::TopicPolicy');
       expect(Object.keys(policies)).toHaveLength(1);
       const policy = Object.values(policies)[0];
-      
+
       expect(policy.Properties.PolicyDocument.Statement).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             Effect: 'Allow',
             Principal: {
-              Service: 'events.amazonaws.com'
+              Service: 'events.amazonaws.com',
             },
             Action: 'sns:Publish',
             Resource: expect.objectContaining({
-              Ref: expect.stringMatching(/^TestTopic/)
+              Ref: expect.stringMatching(/^TestTopic/),
             }),
             Condition: {
               StringEquals: {
                 'aws:SourceArn': expect.objectContaining({
                   'Fn::GetAtt': [
                     expect.stringMatching(/^TestNotifierStripeEventRule/),
-                    'Arn'
-                  ]
-                })
-              }
-            }
-          })
+                    'Arn',
+                  ],
+                }),
+              },
+            },
+          }),
         ])
       );
     });
@@ -182,20 +191,18 @@ describe('AwsSimpleStripeEventNotifier', () => {
       const rules = template.findResources('AWS::Events::Rule');
       expect(Object.keys(rules)).toHaveLength(1);
       const rule = Object.values(rules)[0];
-      
+
       expect(rule.Properties.Targets).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             Arn: expect.objectContaining({
-              Ref: expect.stringMatching(/^TestTopic/)
+              Ref: expect.stringMatching(/^TestTopic/),
             }),
-            Id: 'Target0'
-          })
+            Id: 'Target0',
+          }),
         ])
       );
     });
-
-
   });
 
   // 5. メッセージテンプレートテスト
@@ -209,20 +216,19 @@ describe('AwsSimpleStripeEventNotifier', () => {
       const rules = template.findResources('AWS::Events::Rule');
       expect(Object.keys(rules)).toHaveLength(1);
       const rule = Object.values(rules)[0];
-      
+
       expect(rule.Properties.Targets).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             Arn: expect.objectContaining({
-              Ref: expect.stringMatching(/^TestTopic/)
+              Ref: expect.stringMatching(/^TestTopic/),
             }),
             InputTransformer: expect.objectContaining({
-              InputTemplate: expect.any(String)
-            })
-          })
+              InputTemplate: expect.any(String),
+            }),
+          }),
         ])
       );
     });
   });
 });
-

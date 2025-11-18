@@ -125,7 +125,7 @@ describe('StripeEventsToSns', () => {
       };
 
       // WHEN
-      new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', customProps);
+      new StripeEventsToSns(stack, 'TestNotifier', customProps);
       const template = Template.fromStack(stack);
 
       // THEN

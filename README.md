@@ -267,16 +267,16 @@ This library (`cdk-construct-stripe-events-to-sns`) and `lambda-stripe-notificat
 
 ### Comparison Summary
 
-| Feature | `StripeEventsToSns` (or `cdk-construct-stripe-events-to-sns`) | `lambda-stripe-notifications` |
-|---------|-----------------------------------|-------------------------------|
-| Architecture | EventBridge → SNS | EventBridge → Lambda → SNS |
-| Lambda Required | ❌ No | ✅ Yes |
-| Stripe API Calls | ❌ No | ✅ Yes |
-| Message Customization | ✅ Full control via templates | ⚠️ Limited to predefined format |
-| Event Types | ✅ All Stripe events | ⚠️ Checkout events focused |
-| Cost | 💰 Lower (no Lambda) | 💰 Higher (Lambda execution) |
-| Latency | ⚡ Lower (direct) | ⚡ Higher (Lambda processing) |
-| Use Case | Generic event forwarding | Specialized Slack notifications |
+| Feature               | `StripeEventsToSns` (or `cdk-construct-stripe-events-to-sns`) | `lambda-stripe-notifications`   |
+| --------------------- | ------------------------------------------------------------- | ------------------------------- |
+| Architecture          | EventBridge → SNS                                             | EventBridge → Lambda → SNS      |
+| Lambda Required       | ❌ No                                                         | ✅ Yes                          |
+| Stripe API Calls      | ❌ No                                                         | ✅ Yes                          |
+| Message Customization | ✅ Full control via templates                                 | ⚠️ Limited to predefined format |
+| Event Types           | ✅ All Stripe events                                          | ⚠️ Checkout events focused      |
+| Cost                  | 💰 Lower (no Lambda)                                          | 💰 Higher (Lambda execution)    |
+| Latency               | ⚡ Lower (direct)                                             | ⚡ Higher (Lambda processing)   |
+| Use Case              | Generic event forwarding                                      | Specialized Slack notifications |
 
 ## License
 

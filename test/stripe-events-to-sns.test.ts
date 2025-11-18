@@ -2,10 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as sns from 'aws-cdk-lib/aws-sns';
-import {
-  StripeEventsToSns,
-  StripeEventsToSnsProps,
-} from '../src/index';
+import { StripeEventsToSns, StripeEventsToSnsProps } from '../src/index';
 
 describe('StripeEventsToSns', () => {
   let app: cdk.App;
@@ -34,11 +31,7 @@ describe('StripeEventsToSns', () => {
   describe('Constructor Initialization', () => {
     test('should create construct with valid props', () => {
       // WHEN
-      const notifier = new StripeEventsToSns(
-        stack,
-        'TestNotifier',
-        props
-      );
+      const notifier = new StripeEventsToSns(stack, 'TestNotifier', props);
 
       // THEN
       expect(notifier).toBeDefined();

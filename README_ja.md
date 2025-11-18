@@ -267,8 +267,8 @@ npm run watch
 
 ### 比較サマリー
 
-| 機能                   | `StripeEventsToSns`（または`cdk-construct-stripe-events-to-sns`） | `lambda-stripe-notifications`       |
-| ---------------------- | ----------------------------------------------------------------- | ----------------------------------- |
+| 機能                   | `StripeEventsToSns` | `lambda-stripe-notifications`       |
+| ---------------------- | ------------------- | ----------------------------------- |
 | アーキテクチャ         | EventBridge → SNS                                                 | EventBridge → Lambda → SNS          |
 | Lambda必須             | ❌ 不要                                                           | ✅ 必要                             |
 | Stripe API呼び出し     | ❌ なし                                                           | ✅ あり                             |

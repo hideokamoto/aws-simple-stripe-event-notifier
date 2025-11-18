@@ -267,8 +267,8 @@ This library (`cdk-construct-stripe-events-to-sns`) and `lambda-stripe-notificat
 
 ### Comparison Summary
 
-| Feature               | `StripeEventsToSns` (or `cdk-construct-stripe-events-to-sns`) | `lambda-stripe-notifications`   |
-| --------------------- | ------------------------------------------------------------- | ------------------------------- |
+| Feature               | `StripeEventsToSns` | `lambda-stripe-notifications`   |
+| --------------------- | ------------------- | ------------------------------- |
 | Architecture          | EventBridge → SNS                                             | EventBridge → Lambda → SNS      |
 | Lambda Required       | ❌ No                                                         | ✅ Yes                          |
 | Stripe API Calls      | ❌ No                                                         | ✅ Yes                          |

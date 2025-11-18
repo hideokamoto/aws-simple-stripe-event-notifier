@@ -70,6 +70,20 @@ export class AwsSimpleStripeEventNotifier extends Construct {
   constructor(scope: Construct, id: string, props: AwsSimpleStripeEventNotifierProps) {
     super(scope, id);
 
+    // Validate required properties
+    if (!props.eventBus) {
+      throw new Error('eventBus is required');
+    }
+    if (!props.topic) {
+      throw new Error('topic is required');
+    }
+    if (!props.eventTypes || props.eventTypes.length === 0) {
+      throw new Error('eventTypes must be a non-empty array');
+    }
+    if (!props.messageTemplate) {
+      throw new Error('messageTemplate is required');
+    }
+
     /**
      * EventBridge Rule for Stripe Event Processing
      * 

@@ -76,6 +76,7 @@ npm install cdk-construct-stripe-events-to-sns
 ### Basic Usage Example
 
 ```typescript
+import { Construct } from 'constructs';
 import * as cdk from 'aws-cdk-lib';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as sns from 'aws-cdk-lib/aws-sns';

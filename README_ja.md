@@ -247,9 +247,9 @@ npm run watch
 
 ## Constructの使い分け
 
-このライブラリ（`aws-simple-stripe-event-notifier`）と`lambda-stripe-notifications`は、どちらもStripeイベントを処理するために設計されていますが、異なる用途に適しています：
+このライブラリ（`cdk-construct-stripe-events-to-sns`）と`lambda-stripe-notifications`は、どちらもStripeイベントを処理するために設計されていますが、異なる用途に適しています：
 
-### `aws-simple-stripe-event-notifier`を使用する場合
+### `StripeEventsToSns`（または`cdk-construct-stripe-events-to-sns`）を使用する場合
 
 - **シンプルなイベント転送**: 追加の処理なしでStripeイベントをSNSに転送する必要がある
 - **Lambdaのオーバーヘッドを避ける**: Lambda実行コストやコールドスタートを避けたい
@@ -267,7 +267,7 @@ npm run watch
 
 ### 比較サマリー
 
-| 機能 | `aws-simple-stripe-event-notifier` | `lambda-stripe-notifications` |
+| 機能 | `StripeEventsToSns`（または`cdk-construct-stripe-events-to-sns`） | `lambda-stripe-notifications` |
 |------|-----------------------------------|-------------------------------|
 | アーキテクチャ | EventBridge → SNS | EventBridge → Lambda → SNS |
 | Lambda必須 | ❌ 不要 | ✅ 必要 |

@@ -247,9 +247,9 @@ npm run watch
 
 ## Choosing Between Constructs
 
-This library (`aws-simple-stripe-event-notifier`) and `lambda-stripe-notifications` are both designed to handle Stripe events, but they serve different use cases:
+This library (`cdk-construct-stripe-events-to-sns`) and `lambda-stripe-notifications` are both designed to handle Stripe events, but they serve different use cases:
 
-### When to Use `aws-simple-stripe-event-notifier`
+### When to Use `StripeEventsToSns` (or `cdk-construct-stripe-events-to-sns`)
 
 - **Simple event forwarding**: You need to forward Stripe events to SNS without additional processing
 - **No Lambda overhead**: You want to avoid Lambda execution costs and cold starts
@@ -267,7 +267,7 @@ This library (`aws-simple-stripe-event-notifier`) and `lambda-stripe-notificatio
 
 ### Comparison Summary
 
-| Feature | `aws-simple-stripe-event-notifier` | `lambda-stripe-notifications` |
+| Feature | `StripeEventsToSns` (or `cdk-construct-stripe-events-to-sns`) | `lambda-stripe-notifications` |
 |---------|-----------------------------------|-------------------------------|
 | Architecture | EventBridge → SNS | EventBridge → Lambda → SNS |
 | Lambda Required | ❌ No | ✅ Yes |

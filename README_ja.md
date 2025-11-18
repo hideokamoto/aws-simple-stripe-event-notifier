@@ -245,6 +245,39 @@ npm run test
 npm run watch
 ```
 
+## Constructの使い分け
+
+このライブラリ（`cdk-construct-stripe-events-to-sns`）と`lambda-stripe-notifications`は、どちらもStripeイベントを処理するために設計されていますが、異なる用途に適しています：
+
+### `StripeEventsToSns`（または`cdk-construct-stripe-events-to-sns`）を使用する場合
+
+- **シンプルなイベント転送**: 追加の処理なしでStripeイベントをSNSに転送する必要がある
+- **Lambdaのオーバーヘッドを避ける**: Lambda実行コストやコールドスタートを避けたい
+- **カスタムメッセージフォーマット**: EventBridgeのメッセージテンプレートを使用してSNSメッセージフォーマットを完全に制御する必要がある
+- **すべてのイベントタイプ**: 柔軟なフィルタリングで任意のStripeイベントタイプを処理する必要がある
+- **直接統合**: 中間処理なしでEventBridge → SNSの直接統合を好む
+
+### `lambda-stripe-notifications`を使用する場合
+
+- **Stripe API呼び出し**: Stripe APIから追加の詳細情報を取得する必要がある（例：完全なチェックアウトセッションの詳細を取得）
+- **Slack通知**: AWS Chatbot経由でフォーマットされたSlack通知を特に必要とする
+- **複雑な処理**: カスタムビジネスロジックやデータ変換を実行する必要がある
+- **チェックアウトイベント**: 主に`checkout.session.completed`と`checkout.session.async_payment_succeeded`イベントを処理する
+- **多言語サポート**: 日本語と英語の通知メッセージの組み込みサポートが必要
+
+### 比較サマリー
+
+| 機能 | `StripeEventsToSns`（または`cdk-construct-stripe-events-to-sns`） | `lambda-stripe-notifications` |
+|------|-----------------------------------|-------------------------------|
+| アーキテクチャ | EventBridge → SNS | EventBridge → Lambda → SNS |
+| Lambda必須 | ❌ 不要 | ✅ 必要 |
+| Stripe API呼び出し | ❌ なし | ✅ あり |
+| メッセージカスタマイズ | ✅ テンプレートで完全制御 | ⚠️ 事前定義されたフォーマットに限定 |
+| イベントタイプ | ✅ すべてのStripeイベント | ⚠️ チェックアウトイベントに特化 |
+| コスト | 💰 低い（Lambdaなし） | 💰 高い（Lambda実行） |
+| レイテンシー | ⚡ 低い（直接） | ⚡ 高い（Lambda処理） |
+| 使用ケース | 汎用的なイベント転送 | 専用のSlack通知 |
+
 ## ライセンス
 
 MIT License

@@ -2,17 +2,14 @@ import * as cdk from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as sns from 'aws-cdk-lib/aws-sns';
-import {
-  AwsSimpleStripeEventNotifier,
-  AwsSimpleStripeEventNotifierProps,
-} from '../src/index';
+import { StripeEventsToSns, StripeEventsToSnsProps } from '../src/index';
 
-describe('AwsSimpleStripeEventNotifier', () => {
+describe('StripeEventsToSns', () => {
   let app: cdk.App;
   let stack: cdk.Stack;
   let eventBus: events.EventBus;
   let topic: sns.Topic;
-  let props: AwsSimpleStripeEventNotifierProps;
+  let props: StripeEventsToSnsProps;
 
   beforeEach(() => {
     app = new cdk.App();
@@ -34,11 +31,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
   describe('Constructor Initialization', () => {
     test('should create construct with valid props', () => {
       // WHEN
-      const notifier = new AwsSimpleStripeEventNotifier(
-        stack,
-        'TestNotifier',
-        props
-      );
+      const notifier = new StripeEventsToSns(stack, 'TestNotifier', props);
 
       // THEN
       expect(notifier).toBeDefined();
@@ -51,7 +44,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
 
       // WHEN & THEN
       expect(() => {
-        new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', invalidProps);
+        new StripeEventsToSns(stack, 'TestNotifier', invalidProps);
       }).toThrow();
     });
 
@@ -61,7 +54,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
 
       // WHEN & THEN
       expect(() => {
-        new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', invalidProps);
+        new StripeEventsToSns(stack, 'TestNotifier', invalidProps);
       }).toThrow();
     });
 
@@ -71,7 +64,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
 
       // WHEN & THEN
       expect(() => {
-        new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', invalidProps);
+        new StripeEventsToSns(stack, 'TestNotifier', invalidProps);
       }).toThrow();
     });
 
@@ -81,7 +74,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
 
       // WHEN & THEN
       expect(() => {
-        new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', invalidProps);
+        new StripeEventsToSns(stack, 'TestNotifier', invalidProps);
       }).toThrow();
     });
   });
@@ -90,7 +83,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
   describe('EventBridge Rule Creation', () => {
     test('should create EventBridge rule with correct properties', () => {
       // WHEN
-      new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', props);
+      new StripeEventsToSns(stack, 'TestNotifier', props);
       const template = Template.fromStack(stack);
 
       // THEN
@@ -105,7 +98,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
 
     test('should use provided event bus', () => {
       // WHEN
-      new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', props);
+      new StripeEventsToSns(stack, 'TestNotifier', props);
       const template = Template.fromStack(stack);
 
       // THEN
@@ -125,7 +118,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
       };
 
       // WHEN
-      new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', customProps);
+      new StripeEventsToSns(stack, 'TestNotifier', customProps);
       const template = Template.fromStack(stack);
 
       // THEN
@@ -145,7 +138,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
   describe('IAM Policy Configuration', () => {
     test('should configure SNS topic policy correctly', () => {
       // WHEN
-      new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', props);
+      new StripeEventsToSns(stack, 'TestNotifier', props);
       const template = Template.fromStack(stack);
 
       // THEN
@@ -184,7 +177,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
   describe('SNS Target Configuration', () => {
     test('should add SNS topic as target to EventBridge rule', () => {
       // WHEN
-      new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', props);
+      new StripeEventsToSns(stack, 'TestNotifier', props);
       const template = Template.fromStack(stack);
 
       // THEN
@@ -209,7 +202,7 @@ describe('AwsSimpleStripeEventNotifier', () => {
   describe('Message Template', () => {
     test('should apply message template with InputTransformer', () => {
       // WHEN
-      new AwsSimpleStripeEventNotifier(stack, 'TestNotifier', props);
+      new StripeEventsToSns(stack, 'TestNotifier', props);
       const template = Template.fromStack(stack);
 
       // THEN

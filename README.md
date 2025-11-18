@@ -1,6 +1,6 @@
-# AWS Simple Stripe Event Notifier
+# Stripe Events to SNS
 
-AWS CDK Construct Library for creating a complete Stripe event notification system using AWS EventBridge and SNS.
+AWS CDK Construct Library for sending Stripe events to SNS topics.
 
 ## Overview
 
@@ -17,7 +17,7 @@ This library provides a CDK Construct for receiving Stripe webhook events throug
 ## Installation
 
 ```bash
-npm install aws-simple-stripe-event-notifier
+npm install cdk-construct-stripe-events-to-sns
 ```
 
 ## Getting Started
@@ -68,7 +68,7 @@ For detailed instructions, refer to the [official Stripe documentation](https://
 Now you can install and use the library in your CDK project:
 
 ```bash
-npm install aws-simple-stripe-event-notifier
+npm install cdk-construct-stripe-events-to-sns
 ```
 
 ## Usage
@@ -76,10 +76,11 @@ npm install aws-simple-stripe-event-notifier
 ### Basic Usage Example
 
 ```typescript
+import { Construct } from 'constructs';
 import * as cdk from 'aws-cdk-lib';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as sns from 'aws-cdk-lib/aws-sns';
-import { AwsSimpleStripeEventNotifier } from 'aws-simple-stripe-event-notifier';
+import { StripeEventsToSns } from 'cdk-construct-stripe-events-to-sns';
 
 export class MyStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -98,7 +99,7 @@ export class MyStack extends cdk.Stack {
     });
 
     // Create Stripe event notification system
-    new AwsSimpleStripeEventNotifier(this, 'StripeEventNotifier', {
+    new StripeEventsToSns(this, 'StripeEventNotifier', {
       eventBus,
       topic,
       eventTypes: ['payment_intent.succeeded', 'customer.created'],
@@ -141,7 +142,7 @@ const snsTopicForShifterActivitiesChannel = new sns.Topic(
 );
 
 // Stripe subscription creation event notification
-new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
+new StripeEventsToSns(this, 'StripeSubscriptionCreatedToSNS', {
   eventBus,
   topic: snsTopicForShifterActivitiesChannel,
   eventTypes: ['customer.subscription.created'],
@@ -182,7 +183,7 @@ new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
 
 ## API Reference
 
-### AwsSimpleStripeEventNotifierProps
+### StripeEventsToSnsProps
 
 | Property          | Type                  | Required | Description                                       |
 | ----------------- | --------------------- | -------- | ------------------------------------------------- |
@@ -244,6 +245,39 @@ npm run test
 ```bash
 npm run watch
 ```
+
+## Choosing Between Constructs
+
+This library (`cdk-construct-stripe-events-to-sns`) and `lambda-stripe-notifications` are both designed to handle Stripe events, but they serve different use cases:
+
+### When to Use `StripeEventsToSns` (or `cdk-construct-stripe-events-to-sns`)
+
+- **Simple event forwarding**: You need to forward Stripe events to SNS without additional processing
+- **No Lambda overhead**: You want to avoid Lambda execution costs and cold starts
+- **Custom message formatting**: You need full control over the SNS message format using EventBridge's message templating
+- **All event types**: You need to handle any Stripe event type with flexible filtering
+- **Direct integration**: You prefer EventBridge → SNS direct integration without intermediate processing
+
+### When to Use `lambda-stripe-notifications`
+
+- **Stripe API calls**: You need to fetch additional details from Stripe API (e.g., retrieving full checkout session details)
+- **Slack notifications**: You specifically need formatted Slack notifications via AWS Chatbot
+- **Complex processing**: You need to perform custom business logic or data transformation
+- **Checkout events**: You're primarily handling `checkout.session.completed` and `checkout.session.async_payment_succeeded` events
+- **Multi-language support**: You need built-in support for Japanese and English notification messages
+
+### Comparison Summary
+
+| Feature               | `StripeEventsToSns`           | `lambda-stripe-notifications`   |
+| --------------------- | ----------------------------- | ------------------------------- |
+| Architecture          | EventBridge → SNS             | EventBridge → Lambda → SNS      |
+| Lambda Required       | ❌ No                         | ✅ Yes                          |
+| Stripe API Calls      | ❌ No                         | ✅ Yes                          |
+| Message Customization | ✅ Full control via templates | ⚠️ Limited to predefined format |
+| Event Types           | ✅ All Stripe events          | ⚠️ Checkout events focused      |
+| Cost                  | 💰 Lower (no Lambda)          | 💰 Higher (Lambda execution)    |
+| Latency               | ⚡ Lower (direct)             | ⚡ Higher (Lambda processing)   |
+| Use Case              | Generic event forwarding      | Specialized Slack notifications |
 
 ## License
 

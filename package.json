@@ -1,9 +1,25 @@
 {
-  "name": "cdk-construct-stripe-event-notifier",
+  "name": "cdk-construct-stripe-events-to-sns",
   "version": "0.1.0",
   "description": "AWS CDK Construct for creating a complete Stripe event notification system using AWS EventBridge and SNS",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "keywords": [
+    "aws",
+    "aws-cdk",
+    "awscdk",
+    "cdk",
+    "cdk-construct",
+    "construct",
+    "event-notification",
+    "eventbridge",
+    "events",
+    "notifications",
+    "sns",
+    "stripe",
+    "stripe-events",
+    "webhook"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
@@ -14,20 +30,6 @@
     "format:check": "prettier --check .",
     "prepare": "npm run build"
   },
-  "keywords": [
-    "aws",
-    "cdk",
-    "construct",
-    "stripe",
-    "eventbridge",
-    "sns",
-    "webhook",
-    "notifications",
-    "aws-cdk",
-    "cdk-construct",
-    "stripe-events",
-    "event-notification"
-  ],
   "author": "Hideokamoto",
   "license": "MIT",
   "repository": {

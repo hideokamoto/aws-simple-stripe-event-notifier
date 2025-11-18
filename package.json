@@ -1,6 +1,6 @@
 {
   "name": "cdk-construct-stripe-events-to-sns",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "AWS CDK Construct for creating a complete Stripe event notification system using AWS EventBridge and SNS",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

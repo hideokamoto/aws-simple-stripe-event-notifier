@@ -5,7 +5,7 @@ import * as sns from 'aws-cdk-lib/aws-sns';
 import {
   StripeEventsToSns,
   StripeEventsToSnsProps,
-} from '../lib/index';
+} from '../src/index';
 
 describe('StripeEventsToSns', () => {
   let app: cdk.App;

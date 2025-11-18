@@ -4,3 +4,26 @@
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+# Test files
+test/
+*.test.ts
+*.test.js
+
+# Development files
+.git
+.github
+.gitignore
+.eslintrc*
+.prettierrc*
+.prettierignore
+tsconfig.json
+jest.config.js
+
+# Documentation
+README_ja.md
+
+# Build and dev files
+node_modules/
+npm-debug.log
+.DS_Store

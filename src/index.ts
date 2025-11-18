@@ -70,6 +70,28 @@ export class StripeEventsToSns extends Construct {
   constructor(scope: Construct, id: string, props: StripeEventsToSnsProps) {
     super(scope, id);
 
+    // Validate required properties - collect all errors before throwing
+    const errors: string[] = [];
+
+    if (!props.eventBus) {
+      errors.push('eventBus is required');
+    }
+    if (!props.topic) {
+      errors.push('topic is required');
+    }
+    if (!props.eventTypes || props.eventTypes.length === 0) {
+      errors.push('eventTypes must be a non-empty array');
+    }
+    if (!props.messageTemplate) {
+      errors.push('messageTemplate is required');
+    }
+
+    if (errors.length > 0) {
+      throw new Error(
+        `StripeEventsToSns validation failed:\n  - ${errors.join('\n  - ')}`
+      );
+    }
+
     /**
      * EventBridge Rule for Stripe Event Processing
      * 

@@ -1,6 +1,7 @@
 {
   "name": "cdk-construct-stripe-event-notifier",
   "version": "0.1.0",
+  "description": "AWS CDK Construct for creating a complete Stripe event notification system using AWS EventBridge and SNS",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -10,7 +11,41 @@
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "construct",
+    "stripe",
+    "eventbridge",
+    "sns",
+    "webhook",
+    "notifications",
+    "aws-cdk",
+    "cdk-construct",
+    "stripe-events",
+    "event-notification"
+  ],
+  "author": "Hideokamoto",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hideokamoto/aws-simple-stripe-event-notifier.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hideokamoto/aws-simple-stripe-event-notifier/issues"
+  },
+  "homepage": "https://github.com/hideokamoto/aws-simple-stripe-event-notifier#readme",
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",

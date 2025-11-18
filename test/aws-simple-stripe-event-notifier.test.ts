@@ -5,7 +5,7 @@ import * as sns from 'aws-cdk-lib/aws-sns';
 import {
   AwsSimpleStripeEventNotifier,
   AwsSimpleStripeEventNotifierProps,
-} from '../lib/index';
+} from '../src/index';
 
 describe('AwsSimpleStripeEventNotifier', () => {
   let app: cdk.App;

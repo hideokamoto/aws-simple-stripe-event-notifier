@@ -1,6 +1,6 @@
-# AWS Simple Stripe Event Notifier
+# Stripe Events to SNS
 
-AWS CDK Construct Library for creating a complete Stripe event notification system using AWS EventBridge and SNS.
+StripeイベントをSNSトピックに送信するためのAWS CDK Constructライブラリ。
 
 ## 概要
 
@@ -17,7 +17,7 @@ AWS CDK Construct Library for creating a complete Stripe event notification syst
 ## インストール
 
 ```bash
-npm install aws-simple-stripe-event-notifier
+npm install cdk-construct-stripe-events-to-sns
 ```
 
 ## はじめに
@@ -68,7 +68,7 @@ npm install aws-simple-stripe-event-notifier
 これで、CDKプロジェクトでライブラリをインストールして使用できます：
 
 ```bash
-npm install aws-simple-stripe-event-notifier
+npm install cdk-construct-stripe-events-to-sns
 ```
 
 ## 使用方法
@@ -79,7 +79,7 @@ npm install aws-simple-stripe-event-notifier
 import * as cdk from 'aws-cdk-lib';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as sns from 'aws-cdk-lib/aws-sns';
-import { AwsSimpleStripeEventNotifier } from 'aws-simple-stripe-event-notifier';
+import { StripeEventsToSns } from 'cdk-construct-stripe-events-to-sns';
 
 export class MyStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -98,7 +98,7 @@ export class MyStack extends cdk.Stack {
     });
 
     // Stripeイベント通知システムを作成
-    new AwsSimpleStripeEventNotifier(this, 'StripeEventNotifier', {
+    new StripeEventsToSns(this, 'StripeEventNotifier', {
       eventBus,
       topic,
       eventTypes: ['payment_intent.succeeded', 'customer.created'],
@@ -141,7 +141,7 @@ const snsTopicForShifterActivitiesChannel = new sns.Topic(
 );
 
 // Stripeサブスクリプション作成イベント用の通知
-new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
+new StripeEventsToSns(this, 'StripeSubscriptionCreatedToSNS', {
   eventBus,
   topic: snsTopicForShifterActivitiesChannel,
   eventTypes: ['customer.subscription.created'],
@@ -182,7 +182,7 @@ new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
 
 ## API リファレンス
 
-### AwsSimpleStripeEventNotifierProps
+### StripeEventsToSnsProps
 
 | プロパティ        | 型                    | 必須 | 説明                                            |
 | ----------------- | --------------------- | ---- | ----------------------------------------------- |

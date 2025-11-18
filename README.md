@@ -1,6 +1,6 @@
-# AWS Simple Stripe Event Notifier
+# Stripe Events to SNS
 
-AWS CDK Construct Library for creating a complete Stripe event notification system using AWS EventBridge and SNS.
+AWS CDK Construct Library for sending Stripe events to SNS topics.
 
 ## Overview
 
@@ -17,7 +17,7 @@ This library provides a CDK Construct for receiving Stripe webhook events throug
 ## Installation
 
 ```bash
-npm install aws-simple-stripe-event-notifier
+npm install cdk-construct-stripe-events-to-sns
 ```
 
 ## Getting Started
@@ -68,7 +68,7 @@ For detailed instructions, refer to the [official Stripe documentation](https://
 Now you can install and use the library in your CDK project:
 
 ```bash
-npm install aws-simple-stripe-event-notifier
+npm install cdk-construct-stripe-events-to-sns
 ```
 
 ## Usage
@@ -79,7 +79,7 @@ npm install aws-simple-stripe-event-notifier
 import * as cdk from 'aws-cdk-lib';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as sns from 'aws-cdk-lib/aws-sns';
-import { AwsSimpleStripeEventNotifier } from 'aws-simple-stripe-event-notifier';
+import { StripeEventsToSns } from 'cdk-construct-stripe-events-to-sns';
 
 export class MyStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -98,7 +98,7 @@ export class MyStack extends cdk.Stack {
     });
 
     // Create Stripe event notification system
-    new AwsSimpleStripeEventNotifier(this, 'StripeEventNotifier', {
+    new StripeEventsToSns(this, 'StripeEventNotifier', {
       eventBus,
       topic,
       eventTypes: ['payment_intent.succeeded', 'customer.created'],
@@ -141,7 +141,7 @@ const snsTopicForShifterActivitiesChannel = new sns.Topic(
 );
 
 // Stripe subscription creation event notification
-new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
+new StripeEventsToSns(this, 'StripeSubscriptionCreatedToSNS', {
   eventBus,
   topic: snsTopicForShifterActivitiesChannel,
   eventTypes: ['customer.subscription.created'],
@@ -182,7 +182,7 @@ new AwsSimpleStripeEventNotifier(this, 'StripeSubscriptionCreatedToSNS', {
 
 ## API Reference
 
-### AwsSimpleStripeEventNotifierProps
+### StripeEventsToSnsProps
 
 | Property          | Type                  | Required | Description                                       |
 | ----------------- | --------------------- | -------- | ------------------------------------------------- |

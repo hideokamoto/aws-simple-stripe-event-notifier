@@ -5,14 +5,14 @@ import * as targets from 'aws-cdk-lib/aws-events-targets';
 import * as iam from 'aws-cdk-lib/aws-iam';
 
 /**
- * Configuration properties for the AWS Simple Stripe Event Notifier construct.
+ * Configuration properties for the Stripe Events to SNS construct.
  * 
  * This interface defines the required parameters to set up a complete Stripe event
  * notification system using AWS EventBridge and SNS.
  * 
- * @interface AwsSimpleStripeEventNotifierProps
+ * @interface StripeEventsToSnsProps
  */
-export interface AwsSimpleStripeEventNotifierProps {
+export interface StripeEventsToSnsProps {
   /** 
    * The EventBridge event bus where Stripe events will be received.
    * This should be the custom event bus configured to receive events from Stripe.
@@ -39,7 +39,7 @@ export interface AwsSimpleStripeEventNotifierProps {
 }
 
 /**
- * AWS Simple Stripe Event Notifier Construct
+ * Stripe Events to SNS Construct
  * 
  * This construct creates a complete Stripe event notification system that:
  * 1. Listens for Stripe events on a specified EventBridge event bus
@@ -50,13 +50,13 @@ export interface AwsSimpleStripeEventNotifierProps {
  * The construct is designed to be a drop-in solution for Stripe webhook processing
  * using AWS EventBridge as the event router and SNS for notification delivery.
  * 
- * @class AwsSimpleStripeEventNotifier
+ * @class StripeEventsToSns
  * @extends Construct
  */
-export class AwsSimpleStripeEventNotifier extends Construct {
+export class StripeEventsToSns extends Construct {
 
   /**
-   * Creates a new instance of the AWS Simple Stripe Event Notifier.
+   * Creates a new instance of the Stripe Events to SNS construct.
    * 
    * This constructor sets up the complete event processing pipeline including:
    * - EventBridge rule for filtering Stripe events
@@ -67,7 +67,7 @@ export class AwsSimpleStripeEventNotifier extends Construct {
    * @param id - Unique identifier for this construct
    * @param props - Configuration properties for the notifier
    */
-  constructor(scope: Construct, id: string, props: AwsSimpleStripeEventNotifierProps) {
+  constructor(scope: Construct, id: string, props: StripeEventsToSnsProps) {
     super(scope, id);
 
     /**

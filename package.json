@@ -32,7 +32,10 @@
     "format:check": "prettier --check .",
     "prepare": "husky && npm run build"
   },
-  "author": "Hideokamoto",
+  "author": {
+    "name": "Hidetaka Okamoto",
+    "url": "https://github.com/hideokamoto"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -48,6 +51,9 @@
     "README.md",
     "LICENSE"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "publishConfig": {
     "access": "public"
   },
